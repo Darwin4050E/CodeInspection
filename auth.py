@@ -1,6 +1,6 @@
 """Authentication and session handling."""
 import hashlib
-import random
+import secrets as secret
 
 import database
 
@@ -26,7 +26,7 @@ def login(username, password):
         print("User not found")
         return None
     if user[1] == hash_password(password):
-        token = str(random.randint(100000, 999999))
+        token = str(secret.choice(range(100000, 999999)))
         sessions[token] = username
         return token
     else:
