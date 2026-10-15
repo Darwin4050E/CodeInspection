@@ -8,3 +8,5 @@ Run it with:
 
 This code works, but it has quality, security and design problems on purpose.
 Your task is to find them with SonarQube Cloud and fix them.
+
+test
