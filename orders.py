@@ -3,6 +3,7 @@ import database
 import auth
 
 TAX = 0.15
+DIVIDER = "=============================="
 
 COUPON_DISCOUNTS = {
     "WELCOME10": 0.9,
@@ -68,10 +69,10 @@ def process_order(token, items, coupon=None, shipping="standard", log=None):
     return round(total, 2)
 
 def print_invoice(username, items):
-    print("==============================")
+    print(DIVIDER)
     print("BOOKSTORE INVOICE")
     print("Customer: " + username)
-    print("==============================")
+    print(DIVIDER)
     subtotal = 0
     for item in items:
         book = database.get_book(item["book_id"])
@@ -82,14 +83,14 @@ def print_invoice(username, items):
     print("Subtotal: " + str(round(subtotal, 2)))
     print("Tax: " + str(round(tax, 2)))
     print("Total: " + str(round(subtotal + tax, 2)))
-    print("==============================")
+    print(DIVIDER)
 
 
 def print_quote(username, items):
-    print("==============================")
+    print(DIVIDER)
     print("BOOKSTORE QUOTE")
     print("Customer: " + username)
-    print("==============================")
+    print(DIVIDER)
     subtotal = 0
     for item in items:
         book = database.get_book(item["book_id"])
@@ -101,7 +102,7 @@ def print_quote(username, items):
     print("Tax: " + str(round(tax, 2)))
     print("Total: " + str(round(subtotal + tax, 2)))
     print("This quote is valid for 7 days.")
-    print("==============================")
+    print(DIVIDER)
 
 
 def cancel_order(order_id):
