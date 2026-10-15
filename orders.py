@@ -1,4 +1,5 @@
 """Order processing logic."""
+import sqlite3
 import database
 import auth
 
@@ -108,8 +109,12 @@ def print_quote(username, items):
 
 def cancel_order(order_id):
     try:
-        conn = database.get_connection()
-        conn.execute(f"UPDATE orders SET status = 'CANCELLED' WHERE id = {order_id}")
-        conn.commit()
-    except:
-        pass
+        with database.get_connection() as conn:
+            cur = conn.cursor()
+            # Consulta parametrizada para evitar inyección SQL
+            cur.execute("UPDATE orders SET status = 'CANCELLED' WHERE id = ?", (order_id,))
+            conn.commit()
+            return True
+    except sqlite3.Error as e:
+        print(f"Database error while cancelling order: {e}")
+        return False
